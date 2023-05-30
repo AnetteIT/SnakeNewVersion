@@ -4,20 +4,20 @@ import javax.swing.*;
 
 public class Cell extends JPanel {
 
-    int coordX;
-    int coordY;
+    int cellX;
+    int cellY;
 
-    public Cell(int coordX, int coordY) {
-        this.coordX = coordX;
-        this.coordY = coordY;
+    public Cell(int cellX, int cellY) {
+        this.cellX = cellX;
+        this.cellY = cellY;
     }
 
-    public int getCoordX() {
-        return coordX;
+    public int getCellX() {
+        return cellX;
     }
 
-    public int getCoordY() {
-        return coordY;
+    public int getCellY() {
+        return cellY;
     }
 
 }

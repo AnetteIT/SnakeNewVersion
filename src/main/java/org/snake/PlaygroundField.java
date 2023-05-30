@@ -8,8 +8,9 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.util.LinkedList;
 
-public class Playground {
+public class PlaygroundField {
 
     JFrame gameFieldFrame;
     String audioOnClick = "src/main/resources/oneClick.wav";
@@ -17,13 +18,14 @@ public class Playground {
     Ball ball = new Ball();
     JPanel newPanel = new JPanel(new GridLayout(Ball.MaxY, Ball.MaxX));
     boolean check;
+    LinkedList<Ball> balls = new LinkedList<>();
 
-    public Playground(JFrame gameFieldFrame) {
+    public PlaygroundField(JFrame gameFieldFrame) {
         this.gameFieldFrame = gameFieldFrame;
     }
 
 
-    Playground startGame() {
+    PlaygroundField startGame() {
 
 
         try {
@@ -38,12 +40,12 @@ public class Playground {
         int x = Ball.MaxX;
         int y = Ball.MaxY;
 
-        newPanel.setSize(600, 450);
+       // newPanel.setSize(600, 450);
 
         for (int j = 0; j < y; j++) {
             for (int z = 0; z < x; z++) {
                 JPanel cell = new Cell(z, j);
-                cell.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+                cell.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
                 newPanel.add(cell);
                 cells[z][j] = cell;
             }
@@ -54,9 +56,16 @@ public class Playground {
         gameFieldFrame.repaint();
         gameFieldFrame.setVisible(true);
 
-        ball.ballLabel = new JLabel(ball.getImage());
-    //    ball.ballLabel.setPreferredSize(new Dimension(50, 50));
-        cells[ball.getX()][ball.getY()].add(ball.ballLabel, 0);
+
+        balls.add(ball);
+        balls.add(new BallBody(ball.getX(), ball.getY()+1));
+        balls.add(new BallBody(ball.getX(), ball.getY()+2));
+        balls.add(new BallBody(ball.getX(), ball.getY()+3));
+
+        for (Ball b: balls) {
+            cells[b.getX()][b.getY()].add(b, BorderLayout.CENTER);
+        }
+
 
         gameFieldFrame.pack();
         gameFieldFrame.repaint();
@@ -82,19 +91,19 @@ public class Playground {
         switch (keyCode) {
             case KeyEvent.VK_UP -> {
                 check = ball.moveUP();
-                    moveBall();
+                moveBalls();
             }
             case KeyEvent.VK_DOWN -> {
                 check = ball.moveDown();
-                    moveBall();
+                moveBalls();
             }
             case KeyEvent.VK_LEFT -> {
                 check = ball.moveLeft();
-                    moveBall();
+                moveBalls();
             }
             case KeyEvent.VK_RIGHT -> {
                 check = ball.moveRight();
-                    moveBall();
+                moveBalls();
             }
             default -> {
             }
@@ -103,13 +112,20 @@ public class Playground {
 
         gameFieldFrame.pack();
         gameFieldFrame.repaint();
-        gameFieldFrame.setVisible(true);
     }
 
 
-    public void moveBall() {
-        if (check){
-        cells[ball.getX()][ball.getY()].add(ball.ballLabel,0);
+    public void moveBalls() {
+
+        if(check){
+
+            balls.getLast().setX(BallBody.xHead); balls.getLast().setY(BallBody.yHead);
+            balls.add(1, balls.getLast());
+
+            for (Ball b:balls) {
+                cells[b.getX()][b.getY()].add(b, BorderLayout.CENTER);
+            }
+
         }
     }
 

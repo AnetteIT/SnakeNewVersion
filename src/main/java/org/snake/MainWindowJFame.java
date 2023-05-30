@@ -1,7 +1,6 @@
 package org.snake;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class MainWindowJFame {
     JFrame gameFieldFrame = new JFrame();
@@ -21,7 +20,6 @@ public class MainWindowJFame {
         gameFieldFrame.setName("Snake");
         gameFieldFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameFieldFrame.setLocationRelativeTo(null);
-        gameFieldFrame.setBackground(Color.BLACK);
         gameFieldFrame.setVisible(true);
 
         return gameFieldFrame;

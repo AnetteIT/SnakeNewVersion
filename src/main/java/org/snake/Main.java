@@ -8,15 +8,15 @@ public class Main {
 
     public static void main(String[] args) {
 
-        JFrame gameFieldFrame = new MainWindowJFame(600, 450).getGameWindow();
-        JPanel splashScreen = new SplashScreen(gameFieldFrame).getSplashScreen();
-        Playground playground = new Playground(gameFieldFrame);
+        JFrame mainWindowFrame = new MainWindowJFame(600, 450).getGameWindow();
+        JPanel splashScreen = new SplashScreen(mainWindowFrame).getSplashScreen();
+        PlaygroundField playgroundField = new PlaygroundField(mainWindowFrame);
 
         splashScreen.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                    gameFieldFrame.remove(splashScreen);
-                    playground.startGame();
+                    mainWindowFrame.remove(splashScreen);
+                    playgroundField.startGame();
 
             }
 
