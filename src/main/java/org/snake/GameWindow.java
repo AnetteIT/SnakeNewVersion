@@ -11,12 +11,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 
-public class GameField {
+public class GameWindow {
 
     JFrame gameFieldFrame = new JFrame();
     JPanel panel = new JPanel();
 
-    public GameField() {
+    public JFrame getGameWindow() {
 
         gameFieldFrame.setSize(600, 450);
         gameFieldFrame.setTitle("Snake");
@@ -24,7 +24,7 @@ public class GameField {
         gameFieldFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameFieldFrame.setLocationRelativeTo(null);
         gameFieldFrame.setBackground(Color.BLACK);
-
+        gameFieldFrame.setVisible(true);
 
         // Создаем объект Clip и загружаем аудиофайл
         try {
@@ -48,13 +48,13 @@ public class GameField {
             public void mouseClicked(MouseEvent e) {
                 // воспроизводим звуковой файл
                 new Thread(() -> {
-
                     startGame();
                 }).start();
 
             }
         });
 
+        return gameFieldFrame;
 
     }
 
