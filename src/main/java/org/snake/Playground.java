@@ -7,61 +7,23 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 
-public class GameWindow {
+public class Playground {
 
-    JFrame gameFieldFrame = new JFrame();
-    JPanel panel = new JPanel();
+    JFrame gameFieldFrame;
+    String audioOnClick = "src/main/resources/korotkiy-zvuk-najatiya-na-odnu-klavishu.wav";
 
-    public JFrame getGameWindow() {
-
-        gameFieldFrame.setSize(600, 450);
-        gameFieldFrame.setTitle("Snake");
-        gameFieldFrame.setName("Snake");
-        gameFieldFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        gameFieldFrame.setLocationRelativeTo(null);
-        gameFieldFrame.setBackground(Color.BLACK);
-        gameFieldFrame.setVisible(true);
-
-        // Создаем объект Clip и загружаем аудиофайл
-        try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/main/resources/udaryi-myacha-ob-pol2.wav"));
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-            clip.start();
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-
-        gameFieldFrame.setVisible(true);
-
-        ImageIcon image = new ImageIcon("src/main/resources/ball4.gif");
-        panel.add(new JLabel(image));
-        gameFieldFrame.add(panel);
-        gameFieldFrame.setVisible(true);
-
-        panel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                // воспроизводим звуковой файл
-                new Thread(() -> {
-                    startGame();
-                }).start();
-
-            }
-        });
-
-        return gameFieldFrame;
-
+    public Playground(JFrame gameFieldFrame) {
+        this.gameFieldFrame = gameFieldFrame;
     }
 
-    private void startGame() {
+
+    void startGame() {
+
 
         try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/main/resources/korotkiy-zvuk-najatiya-na-odnu-klavishu.wav"));
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(audioOnClick));
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
@@ -73,7 +35,7 @@ public class GameWindow {
         int y = Ball.MaxY;
 
 
-        gameFieldFrame.remove(panel);
+
 
 
         JPanel newPanel = new JPanel(new GridLayout(y, x));
@@ -167,5 +129,6 @@ public class GameWindow {
         });
 
     }
+
 
 }
