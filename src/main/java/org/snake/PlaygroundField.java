@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class PlaygroundField {
 
@@ -18,7 +18,7 @@ public class PlaygroundField {
     Ball ball = new Ball();
     JPanel newPanel = new JPanel(new GridLayout(Ball.MaxY, Ball.MaxX));
     boolean check;
-    LinkedList<Ball> balls = new LinkedList<>();
+    ArrayList<Ball> balls = new ArrayList<>();
 
     public PlaygroundField(JFrame gameFieldFrame) {
         this.gameFieldFrame = gameFieldFrame;
@@ -57,13 +57,17 @@ public class PlaygroundField {
         gameFieldFrame.setVisible(true);
 
 
-        balls.add(ball);
+        balls.add(0, ball);
         balls.add(new BallBody(ball.getX(), ball.getY()+1));
         balls.add(new BallBody(ball.getX(), ball.getY()+2));
         balls.add(new BallBody(ball.getX(), ball.getY()+3));
 
         for (Ball b: balls) {
             cells[b.getX()][b.getY()].add(b, BorderLayout.CENTER);
+            if(b instanceof BallBody){
+                b.setImage(Directions.BODY);
+                b.setIcon(b.getImage());
+            }
         }
 
 
@@ -119,13 +123,18 @@ public class PlaygroundField {
 
         if(check){
 
-            balls.getLast().setX(BallBody.xHead); balls.getLast().setY(BallBody.yHead);
-            balls.add(1, balls.getLast());
+            balls.get(3).setX(BallBody.xHead);
+            balls.get(3).setY(BallBody.yHead);
+            balls.add(1, balls.get(3));
 
             for (Ball b:balls) {
+                if(b instanceof BallBody){
+                    b.setImage(Directions.BODY);
+                    b.setIcon(b.getImage());
+                }
                 cells[b.getX()][b.getY()].add(b, BorderLayout.CENTER);
             }
-
+            gameFieldFrame.repaint();
         }
     }
 

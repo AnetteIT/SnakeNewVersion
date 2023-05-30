@@ -7,16 +7,23 @@ public class BallBody extends Ball {
 //    private int y1;
     public static int xHead;
     public static int yHead;
-    private static Icon image = setImage(Directions.BODY);
+    protected Icon image  = setImage(Directions.BODY);
 
 
     public BallBody() {
         super();
+        super.image = setImage(Directions.BODY);
+        this.image = setImage(Directions.BODY);
     }
 
     public BallBody(int x, int y) {
         super(x,y);
+        super.image = setImage(Directions.BODY);
+        this.image = setImage(Directions.BODY);
+
     }
+
+
 
 
 }

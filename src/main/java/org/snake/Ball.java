@@ -8,17 +8,17 @@ public class Ball extends JLabel {
     public static final Integer MaxY = 10;
     protected int x = 5;
     protected int y = 3;
-    protected static Icon image = setImage(Directions.RIGHT);
+    protected Icon image;
 
 
     public Ball() {
-        super(null, image, CENTER);
+        super(null, new ImageIcon("src/main/resources/right2.gif"), CENTER);
         setPreferredSize(new Dimension(48, 48));
     }
 
 
     public Ball( int x, int y) {
-        super(null, image, CENTER);
+        super(null, new ImageIcon("src/main/resources/right2.gif"), CENTER);
         setPreferredSize(new Dimension(48, 48));
         this.x = x;
         this.y = y;
@@ -41,15 +41,16 @@ public class Ball extends JLabel {
         this.y = y;
     }
 
-    public static Icon getImage() {
+    public Icon getImage() {
         return image;
     }
 
-    public static Icon setImage(Directions directions) {
+    public Icon setImage(Directions directions) {
         return switch (directions) {
             case LEFT -> image = new ImageIcon("src/main/resources/left.gif");
             case UP -> image = new ImageIcon("src/main/resources/up.gif");
             case DOWN -> image = new ImageIcon("src/main/resources/down.gif");
+            case BODY -> image = new ImageIcon("src/main/resources/body.png");
             default -> image = new ImageIcon("src/main/resources/right2.gif");
         };
     }
