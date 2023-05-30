@@ -5,11 +5,10 @@ import javax.swing.*;
 public class Ball {
     public static final Integer MaxX = 12;
     public static final Integer MaxY = 9;
-
-
-    private int x;
-    private int y;
-    private final ImageIcon image = new ImageIcon("src/main/resources/bbbbbbbb.png");
+    private int x=0;
+    private int y=0;
+    private final ImageIcon image = new ImageIcon("src/main/resources/ballIcon.png");
+    JLabel ballLabel;
 
     public Ball() {
         x = 0;
@@ -28,15 +27,50 @@ public class Ball {
         return y;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
     public ImageIcon getImage() {
         return image;
+    }
+
+
+    boolean moveUP(){
+        if (y >= 0 && y < MaxY) {
+            if (y - 1 >= 0) {
+                y--;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    boolean moveDown(){
+
+        if (y >= 0 && y < MaxY) {
+            if (y + 1 < MaxY) {
+                y++;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    boolean moveLeft(){
+        if (x >= 0 && x < Ball.MaxX) {
+            if (x - 1 >= 0) {
+                x--;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    boolean moveRight(){
+        if (x >= 0 && x < Ball.MaxX) {
+            if (x + 1 < Ball.MaxX) {
+                x++;
+                return true;
+            }
+        }
+        return false;
+
     }
 }

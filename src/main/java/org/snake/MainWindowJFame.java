@@ -6,7 +6,6 @@ import java.awt.*;
 public class MainWindowJFame {
     JFrame gameFieldFrame = new JFrame();
 
-
     int sizeX;
     int sizeY;
 
@@ -28,9 +27,6 @@ public class MainWindowJFame {
         return gameFieldFrame;
 
     }
-
-
-
 
 
 }

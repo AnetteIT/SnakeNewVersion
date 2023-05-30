@@ -10,8 +10,8 @@ public class SplashScreen {
 
     JFrame gameFieldFrame;
     JPanel panel = new JPanel();
-    String pathGifStartGame = "src/main/resources/ball4.gif";
-    String pathAudioStartGame = "src/main/resources/udaryi-myacha-ob-pol2.wav";
+    String pathGifStartGame = "src/main/resources/splashBall.gif";
+    String pathAudioStartGame = "src/main/resources/soundBall.wav";
 
     public SplashScreen(JFrame gameFieldFrame) {
         this.gameFieldFrame = gameFieldFrame;
