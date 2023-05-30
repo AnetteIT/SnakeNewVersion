@@ -2,17 +2,19 @@ package org.snake;
 
 import javax.swing.*;
 
-public class PlayingField {
+import static java.awt.Color.black;
 
-    public static void main(String[] args) {
+public class GameField {
 
+    public GameField() {
         JFrame gameField  = new JFrame();
         gameField.setSize(600, 600);
-        gameField.setTitle("Змейка");
+        gameField.setTitle("Snake");
+        gameField.setName("Snake");
         gameField.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        gameField.setVisible(true);
         gameField.setLocationRelativeTo(null);
+        gameField.setBackground(black);
+        gameField.setVisible(true);
 
     }
-
 }
