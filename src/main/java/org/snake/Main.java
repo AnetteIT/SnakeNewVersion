@@ -5,23 +5,27 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Main {
+    public final static Integer MaxY = 15;
+    public final static Integer MaxX = 20;
+    public final static Integer WIDTH = 600;
+    public final static Integer HEIGHT = 450;
+
 
     public static void main(String[] args) {
 
-        JFrame mainWindowFrame = new MainWindowJFame(600, 450).getGameWindow();
-        JPanel splashScreen = new SplashScreen(mainWindowFrame).getSplashScreen();
-        PlaygroundField playgroundField = new PlaygroundField(mainWindowFrame);
+        MainWindowJFame app = new MainWindowJFame(700, 500).getGameWindow();
+        SplashScreen splashScreen = new SplashScreen(app);
+        JPanel splash = splashScreen.getSplashScreen();
 
-        splashScreen.addMouseListener(new MouseAdapter() {
+        splash.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                    mainWindowFrame.remove(splashScreen);
-                    playgroundField.startGame();
-
+                splashScreen.clickSound();
+                app.remove(splash);
+                PlaygroundField playgroundField = new PlaygroundField(app);
             }
-
         });
-
+      //
 
     }
 

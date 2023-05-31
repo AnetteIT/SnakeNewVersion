@@ -1,9 +1,9 @@
 package org.snake;
 
 import javax.swing.*;
+import java.awt.*;
 
-public class MainWindowJFame {
-    JFrame gameFieldFrame = new JFrame();
+public class MainWindowJFame extends JFrame {
 
     int sizeX;
     int sizeY;
@@ -13,16 +13,19 @@ public class MainWindowJFame {
         this.sizeY = sizeY;
     }
 
-    public JFrame getGameWindow() {
+    public MainWindowJFame getGameWindow() {
 
-        gameFieldFrame.setSize(sizeX, sizeY);
-        gameFieldFrame.setTitle("Snake");
-        gameFieldFrame.setName("Snake");
-        gameFieldFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        gameFieldFrame.setLocationRelativeTo(null);
-        gameFieldFrame.setVisible(true);
+        this.setSize(sizeX, sizeY);
+        this.setTitle("Snake");
+        this.setName("Snake");
+        this.setResizable(false);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.setLayout(new BorderLayout());
+        this.setBackground(Color.WHITE);
+        this.setVisible(true);
 
-        return gameFieldFrame;
+        return this;
 
     }
 
