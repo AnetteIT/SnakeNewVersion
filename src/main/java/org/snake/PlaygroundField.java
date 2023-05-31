@@ -10,67 +10,67 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.concurrent.ThreadLocalRandom;
+
+import static org.snake.Main.*;
 
 public class PlaygroundField extends JPanel  implements ActionListener  {
 
     boolean inGame = true;
-    private Timer foodTimer;
     boolean check;
     int appleX;
     int appleY;
 
     JFrame app;
     InfoPanel info = new InfoPanel();
-    public JPanel[][] cells = new JPanel[Main.MaxX][Main.MaxY];
+    public JPanel[][] cells = new JPanel[MaxX][Main.MaxY];
     Snake ball = new Snake();
 
 
-    ArrayList<Snake> balls = new ArrayList<>();
+    LinkedList<Snake> snakeBody = new LinkedList<>();
     ArrayList<Cell> freeCells = new ArrayList<>();
     Cell randomPointApple;
 
 
-    public PlaygroundField(MainWindowJFame app) {
+    public PlaygroundField(ProgramWindow app) {
         this.app = app;
         startGame();
+        doDrawing();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
         if (inGame) {
+            startAppleTimer();
+            checkApple();
+            Toolkit.getDefaultToolkit().sync();
             repaint();
-        }
-        else {
-            foodTimer.stop();
-            repaint();
-        }
-    }
 
-    private void refresh(Graphics g) {
-        getApple(g);
-        startAppleTimer(g);
-        checkApple(g);
-        repaint();
+        } else {
+            gameOver();
+            repaint();
+        }
     }
 
 
     void startGame() {
 
-        JPanel newPanel = new JPanel(new GridLayout(Main.MaxY, Main.MaxX));
+        JPanel newPanel = new JPanel();
         JPanel infoPanel = info.getInfoPanel(newPanel);
-        drawingCells(Main.MaxX, Main.MaxY, newPanel);
+        infoPanel.setPreferredSize(new Dimension(MaxX*cellPx, cellPx*2));
+        newPanel.setPreferredSize(new Dimension(MaxX*cellPx, MaxY*cellPx));
+        app.setResizable(false);
+        drawingCells(MaxX, MaxY, newPanel);
         app.add(infoPanel, BorderLayout.PAGE_START);
-        app.add(newPanel, BorderLayout.CENTER);
-        app.revalidate();
-        app.repaint();
-        app.setVisible(true);
+        app.add(newPanel, BorderLayout.PAGE_END);
+        //app.revalidate();
         app.addKeyListener(new pressKey());
         ball.initStartSnake(this);
         app.pack();
-        app.repaint();
         app.setVisible(true);
+        app.repaint();
 
     }
 
@@ -78,7 +78,8 @@ public class PlaygroundField extends JPanel  implements ActionListener  {
         for (int j = 0; j < y; j++) {
             for (int z = 0; z < x; z++) {
                 JPanel cell = new Cell(z, j);
-                cell.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+                //cell.setSize(new Dimension(cellPx, cellPx));
+                //cell.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
                 newPanel.add(cell);
                 cells[z][j] = cell;
             }
@@ -86,22 +87,22 @@ public class PlaygroundField extends JPanel  implements ActionListener  {
     }
 
 
-    private void doDrawing(Graphics g) {
+    private void doDrawing() {
 
         if (inGame) {
-            startAppleTimer(g);
-            checkApple(g);
+            startAppleTimer();
+            checkApple();
             Toolkit.getDefaultToolkit().sync();
 
         } else {
-            gameOver(g);
+            gameOver();
         }
     }
 
-    public void getApple(Graphics g) {
+    public void getApple() {
 
 // заполнение списка свободных ячеек
-        for (int x = 0; x < Main.MaxX; x++) {
+        for (int x = 0; x < MaxX; x++) {
             for (int y = 0; y < Main.MaxY; y++) {
                 if (cells[x][y].getComponentCount() == 0) {
                     freeCells.add(new Cell(x, y));
@@ -122,12 +123,12 @@ public class PlaygroundField extends JPanel  implements ActionListener  {
 
 
 
-    public void startAppleTimer(Graphics g) {
+    public void startAppleTimer() {
         int rand = ThreadLocalRandom.current().nextInt(5000, 10000);
-        foodTimer = new Timer(rand, new ActionListener() {
+        Timer foodTimer = new Timer(rand, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeOldFood();
-                getApple(g);
+                getApple();
                 app.repaint();
             }
         });
@@ -136,7 +137,7 @@ public class PlaygroundField extends JPanel  implements ActionListener  {
 
 
     private void removeOldFood() {
-        for (int x = 0; x < Main.MaxX; x++) {
+        for (int x = 0; x < MaxX; x++) {
             for (int y = 0; y < Main.MaxY; y++) {
                 Component[] components = cells[x][y].getComponents();
                 for (Component component : components) {
@@ -152,30 +153,29 @@ public class PlaygroundField extends JPanel  implements ActionListener  {
 
 
 
-    private void gameOver(Graphics g) {
-
+    private void gameOver() {
         String msg = "Game Over";
         Font small = new Font("Helvetica", Font.BOLD, 14);
-        FontMetrics metr = getFontMetrics(small);
-
-        g.setColor(Color.white);
-        g.setFont(small);
-        g.drawString(msg, (Main.WIDTH - metr.stringWidth(msg)) / 2, Main.HEIGHT / 2);
+        JTextArea gameOver = new JTextArea(msg);
+        gameOver.setForeground(Color.BLACK);
+        gameOver.setFont(small);
+        app.add(gameOver);
+        repaint();
     }
 
-    private void checkApple(Graphics g) {
+    private void checkApple() {
 
         if ((ball.getX() == appleX) && (ball.getX() == appleY)) {
             removeOldFood();
             info.dots++;
-            getApple(g);
+            getApple();
         }
     }
 
 
 
 
-    private class pressKey extends KeyAdapter implements org.snake.pressKey {
+    private class pressKey extends KeyAdapter {
 
         @Override
         public void keyPressed(KeyEvent e) {
@@ -211,16 +211,16 @@ public class PlaygroundField extends JPanel  implements ActionListener  {
 
         public void moveBalls() {
 
-            int n = (balls.size());
+            int n = (snakeBody.size());
 
             if (check) {
 
-                balls.get(n - 1).setX(Snake.xHead);
-                balls.get(n - 1).setY(Snake.yHead);
-                balls.add(1, balls.get(n - 1));
-                balls.remove(n);
+                snakeBody.get(n - 1).setX(Snake.xHead);
+                snakeBody.get(n - 1).setY(Snake.yHead);
+                snakeBody.add(1, snakeBody.get(n - 1));
+                snakeBody.remove(n);
 
-                for (Snake b : balls) {
+                for (Snake b : snakeBody) {
                     if (b.isBody) {
                         b.setImage(Directions.BODY);
                         b.setIcon(b.getImage());
@@ -235,14 +235,6 @@ public class PlaygroundField extends JPanel  implements ActionListener  {
 
 
     }
-
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        doDrawing(g);
-    }
-
-
 
 
 }

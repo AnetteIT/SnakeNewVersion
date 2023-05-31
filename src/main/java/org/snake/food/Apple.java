@@ -33,13 +33,4 @@ public class Apple extends Food {
         return super.getY();
     }
 
-    @Override
-    public int getLifeCycle() {
-        return super.getLifeCycle();
-    }
-
-    @Override
-    public int getPoints() {
-        return super.getPoints();
-    }
 }

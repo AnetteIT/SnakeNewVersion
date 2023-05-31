@@ -15,14 +15,14 @@ public class Snake extends JLabel {
 
     public Snake() {
         super(null, new ImageIcon("src/main/resources/up.gif"), CENTER);
-        setPreferredSize(new Dimension(50, 50));
+        //setPreferredSize(new Dimension(50, 50));
         this.isBody = false;
     }
 
 
     public Snake(int x, int y) {
         super(null, new ImageIcon("src/main/resources/up.gif"), CENTER);
-        setPreferredSize(new Dimension(50, 50));
+        //setPreferredSize(new Dimension(50, 50));
         this.x = x;
         this.y = y;
         this.isBody = false;
@@ -30,7 +30,7 @@ public class Snake extends JLabel {
 
     public Snake(int x, int y, Boolean isBody) {
         super(null, new ImageIcon("src/main/resources/body.png"), CENTER);
-        setPreferredSize(new Dimension(50, 50));
+        //setPreferredSize(new Dimension(50, 50));
         this.x = x;
         this.y = y;
         this.isBody = isBody;
@@ -38,7 +38,7 @@ public class Snake extends JLabel {
 
     public Snake( Boolean isBody) {
         super(null, new ImageIcon("src/main/resources/body.png"), CENTER);
-        setPreferredSize(new Dimension(50, 50));
+        //setPreferredSize(new Dimension(50, 50));
         this.x = x;
         this.y = y;
         this.isBody = isBody;
@@ -71,7 +71,7 @@ public class Snake extends JLabel {
             case UP -> image = new ImageIcon("src/main/resources/up.gif");
             case DOWN -> image = new ImageIcon("src/main/resources/down.gif");
             case BODY -> image = new ImageIcon("src/main/resources/body.png");
-            default -> image = new ImageIcon("src/main/resources/right2.gif");
+            default -> image = new ImageIcon("src/main/resources/right.gif");
         };
     }
 
@@ -136,13 +136,13 @@ public class Snake extends JLabel {
 
 
     void initStartSnake(PlaygroundField playgroundField) {
-        playgroundField.balls.add(0, this);
-        playgroundField.balls.add(new Snake(getX(), getY() + 1, true));
-        playgroundField.balls.add(new Snake(getX(), getY() + 2, true));
-        playgroundField.balls.add(new Snake(getX(), getY() + 3, true));
-        playgroundField.balls.add(new Snake(getX(), getY() + 4, true));
+        playgroundField.snakeBody.add(0, this);
+        playgroundField.snakeBody.add(new Snake(getX(), getY() + 1, true));
+        playgroundField.snakeBody.add(new Snake(getX(), getY() + 2, true));
+        playgroundField.snakeBody.add(new Snake(getX(), getY() + 3, true));
+        playgroundField.snakeBody.add(new Snake(getX(), getY() + 4, true));
 
-        for (Snake b : playgroundField.balls) {
+        for (Snake b : playgroundField.snakeBody) {
             playgroundField.cells[b.getX()][b.getY()].add(b, BorderLayout.CENTER);
             if (b.isBody) {
                 b.setImage(Directions.BODY);

@@ -12,21 +12,23 @@ public class InfoPanel {
     }
 
     public JPanel getInfoPanel(JPanel newPanel) {
-        Font font = new Font("Verdana", Font.BOLD, 20);
+        Font font = new Font("Verdana", Font.BOLD, 15);
         newPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-        newPanel.setSize(Main.WIDTH, Main.HEIGHT);
+      //  newPanel.setPreferredSize(new Dimension(MaxX*cellPx, cellPx));
         JPanel infoPanel = new JPanel();
-        JTextArea textPanel = new JTextArea("       Snake Game!         Your score: "+ dots   +"        Your record: "+ record+"     "   );
+        JTextArea textPanel = new JTextArea("    Your score: "+ dots);
         textPanel.setBackground(Color.getColor("#f2f2f2"));
         textPanel.setFont(font);
         textPanel.setForeground(Color.BLUE);
         JButton buttonStart = new JButton("Start again");
+        buttonStart.setPreferredSize(new Dimension(140, 25));
         buttonStart.setFont(font);
         JButton buttonReset = new JButton("Reset Record");
+        buttonReset.setPreferredSize(new Dimension(170, 25));
         buttonReset.setFont(font);
         infoPanel.add(buttonStart, BorderLayout.LINE_START);
         infoPanel.add(buttonReset, BorderLayout.LINE_START);
-        infoPanel.add(textPanel, BorderLayout.LINE_END);
+        infoPanel.add(textPanel, BorderLayout.WEST);
         return infoPanel;
     }
 }
