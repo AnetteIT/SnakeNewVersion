@@ -13,6 +13,8 @@ public class ProgramWindow extends JFrame {
         this.sizeY = sizeY;
     }
 
+
+
     public ProgramWindow getGameWindow() {
 
         this.setSize(sizeX, sizeY);
@@ -21,6 +23,7 @@ public class ProgramWindow extends JFrame {
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
+        this.setLocation(400, 300);
         this.setLayout(new BorderLayout());
         this.setBackground(Color.WHITE);
         this.setVisible(true);

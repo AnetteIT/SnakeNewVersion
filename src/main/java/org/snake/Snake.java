@@ -44,7 +44,6 @@ public class Snake extends JLabel {
         this.isBody = isBody;
     }
 
-
     public int getX() {
         return x;
     }

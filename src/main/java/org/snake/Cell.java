@@ -20,4 +20,5 @@ public class Cell extends JPanel {
         return cellY;
     }
 
+
 }

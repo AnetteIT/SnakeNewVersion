@@ -20,7 +20,7 @@ public class SplashScreen extends JPanel {
     }
 
     public JPanel getSplashScreen() {
-        try {
+
             ImageIcon image = new ImageIcon(pathGifStartGame);
             panel.add(new JLabel(image));
             panel.setBackground(Color.WHITE);
@@ -33,10 +33,7 @@ public class SplashScreen extends JPanel {
 //            clip.open(audioInputStream);
 //            clip.start();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println(e.getMessage());
-        }
+
 
         return panel;
 

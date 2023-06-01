@@ -33,10 +33,20 @@ public class PlaygroundField extends JPanel  implements ActionListener  {
     Cell randomPointApple;
 
 
+
     public PlaygroundField(ProgramWindow app) {
         this.app = app;
+        app.getContentPane().add(this);
         startGame();
         doDrawing();
+    }
+
+
+
+    public void paint (Graphics painter){
+        super.paintComponent(painter);
+        painter.setColor(Color.BLUE);
+        painter.fillOval(5,5, 100,100);
     }
 
     @Override
@@ -57,7 +67,7 @@ public class PlaygroundField extends JPanel  implements ActionListener  {
 
     void startGame() {
 
-        JPanel newPanel = new JPanel();
+        JPanel newPanel = new JPanel(new GridLayout(Main.MaxY, Main.MaxX));
         JPanel infoPanel = info.getInfoPanel(newPanel);
         infoPanel.setPreferredSize(new Dimension(MaxX*cellPx, cellPx*2));
         newPanel.setPreferredSize(new Dimension(MaxX*cellPx, MaxY*cellPx));
@@ -65,7 +75,7 @@ public class PlaygroundField extends JPanel  implements ActionListener  {
         drawingCells(MaxX, MaxY, newPanel);
         app.add(infoPanel, BorderLayout.PAGE_START);
         app.add(newPanel, BorderLayout.PAGE_END);
-        //app.revalidate();
+        app.revalidate();
         app.addKeyListener(new pressKey());
         ball.initStartSnake(this);
         app.pack();
@@ -79,7 +89,7 @@ public class PlaygroundField extends JPanel  implements ActionListener  {
             for (int z = 0; z < x; z++) {
                 JPanel cell = new Cell(z, j);
                 //cell.setSize(new Dimension(cellPx, cellPx));
-                //cell.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+                cell.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
                 newPanel.add(cell);
                 cells[z][j] = cell;
             }
